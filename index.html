@@ -25,21 +25,32 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#0a0a1a;
 #gameScreen{display:none;height:100vh;width:100vw;flex-direction:column;}
 
 /* Top Bar */
-.top-bar{background:linear-gradient(180deg,#1a1a3a,#12122a);padding:8px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #2a2a5a;min-height:50px;flex-shrink:0;}
-.top-bar .info-group{display:flex;gap:24px;align-items:center;}
+.top-bar{background:linear-gradient(180deg,#1a1a3a,#12122a);padding:6px 16px;display:flex;flex-direction:column;gap:4px;border-bottom:2px solid #2a2a5a;flex-shrink:0;}
+.top-row-header{display:flex;justify-content:space-between;align-items:center;}
+.header-left{display:flex;gap:16px;align-items:center;}
+.header-right{display:flex;gap:12px;align-items:center;}
+.team-rows{display:flex;flex-direction:column;gap:2px;}
+.team-row{display:flex;align-items:center;gap:6px;padding:2px 8px;border-radius:6px;font-size:13px;}
+.team-row.blue-row{background:rgba(50,100,200,0.12);border:1px solid rgba(70,130,255,0.2);}
+.team-row.red-row{background:rgba(200,50,50,0.12);border:1px solid rgba(255,70,70,0.2);}
+.team-icon{font-size:14px;width:22px;text-align:center;}
+.team-label{font-size:11px;color:#8888bb;min-width:52px;}
+.team-val{font-weight:bold;font-size:14px;min-width:36px;text-align:right;}
+.team-val.blue-c{color:#5b9bff;}
+.team-val.red-c{color:#ff5b5b;}
+.team-val.gold-c{color:#ffd700;}
+.team-sep{color:#333;margin:0 2px;}
 .info-item{display:flex;align-items:center;gap:6px;font-size:13px;}
 .info-item .label{color:#8888bb;font-size:11px;}
 .info-item .value{color:#fff;font-weight:bold;font-size:15px;}
-.info-item .blue{color:#5b9bff;}
-.info-item .red{color:#ff5b5b;}
-.info-item .gold{color:#ffd700;}
-.stage-badge{background:linear-gradient(135deg,#2a4a7a,#1a3a6a);padding:4px 14px;border-radius:20px;border:1px solid #3a5a9a;font-size:13px;color:#7ab8ff;font-weight:bold;}
+.stage-badge{background:linear-gradient(135deg,#2a4a7a,#1a3a6a);padding:3px 12px;border-radius:20px;border:1px solid #3a5a9a;font-size:12px;color:#7ab8ff;font-weight:bold;}
 
 /* Phase Bar */
 .phase-bar{background:#12122a;padding:6px 20px;display:flex;justify-content:center;align-items:center;gap:16px;border-bottom:1px solid #2a2a4a;flex-shrink:0;}
 .phase-step{padding:4px 16px;border-radius:16px;font-size:12px;font-weight:bold;color:#555;background:#1a1a2a;border:1px solid #2a2a4a;transition:all 0.3s;}
 .phase-step.active{color:#fff;background:linear-gradient(135deg,#2a5a2a,#1a4a1a);border-color:#3a8a3a;box-shadow:0 0 10px rgba(50,150,50,0.3);}
 .phase-step.done{color:#6a6;background:#1a2a1a;border-color:#2a4a2a;}
+.phase-hint{font-size:11px;color:#6a8a6a;font-style:italic;}
 .end-turn-btn{padding:6px 20px;background:linear-gradient(135deg,#8a3a3a,#aa4444);border:1px solid #cc5555;border-radius:8px;color:#fff;font-weight:bold;font-size:13px;cursor:pointer;transition:all 0.3s;margin-left:10px;}
 .end-turn-btn:hover{background:linear-gradient(135deg,#aa4444,#cc5555);transform:scale(1.02);}
 .end-turn-btn:disabled{opacity:0.4;cursor:not-allowed;transform:none;}
@@ -66,6 +77,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#0a0a1a;
 .terrain-hill{background:linear-gradient(135deg,#a89050,#8c7a3e);}
 .terrain-mountain{background:linear-gradient(135deg,#8888a0,#6e6e80);}
 .terrain-city{background:linear-gradient(135deg,#6a7080,#555e6e);}
+.terrain-factory{background:linear-gradient(135deg,#7a6a50,#5e5040);}
 .terrain-river{background:linear-gradient(135deg,#3898c0,#2e80a8);}
 .terrain-sea{background:linear-gradient(135deg,#1a4878,#122e58);}
 
@@ -77,6 +89,7 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#0a0a1a;
 .terrain-river .terrain-tex{background:repeating-linear-gradient(0deg,rgba(255,255,255,0.15) 0px,transparent 2px,transparent 5px);}
 .terrain-sea .terrain-tex{background:repeating-linear-gradient(0deg,rgba(100,180,255,0.12) 0px,transparent 3px,transparent 7px);}
 .terrain-city .terrain-tex{background:repeating-linear-gradient(0deg,rgba(255,255,255,0.08) 0px,rgba(255,255,255,0.08) 1px,transparent 1px,transparent 4px),repeating-linear-gradient(90deg,rgba(255,255,255,0.08) 0px,rgba(255,255,255,0.08) 1px,transparent 1px,transparent 4px);opacity:0.3;}
+.terrain-factory .terrain-tex{background:repeating-linear-gradient(45deg,rgba(255,200,100,0.1) 0px,rgba(255,200,100,0.1) 2px,transparent 2px,transparent 5px);opacity:0.25;}
 
 /* Unit Display - clear team badge background */
 .unit-badge{position:absolute;inset:0;display:flex;justify-content:center;align-items:center;z-index:3;pointer-events:none;}
@@ -155,8 +168,31 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#0a0a1a;
 /* Combat Animation */
 .combat-flash{animation:combatFlash 0.3s ease-out;}
 @keyframes combatFlash{0%{filter:brightness(3);}100%{filter:brightness(1);}}
-.damage-text{position:absolute;color:#ff4444;font-weight:bold;font-size:14px;z-index:50;pointer-events:none;animation:damageFloat 1s ease-out forwards;}
-@keyframes damageFloat{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-30px);}}
+.damage-text{position:absolute;color:#ff4444;font-weight:bold;font-size:14px;z-index:50;pointer-events:none;animation:damageFloat 1s ease-out forwards;text-shadow:0 0 6px #ff0000,0 0 3px #000;}
+@keyframes damageFloat{0%{opacity:1;transform:translateY(0) scale(1.2);}30%{transform:translateY(-8px) scale(1);}100%{opacity:0;transform:translateY(-35px) scale(0.7);}}
+
+/* Destroy effect container */
+.destroy-fx{position:absolute;z-index:60;pointer-events:none;}
+
+/* Explosion flash on cell */
+.cell-explode{animation:cellExplode 0.6s ease-out;}
+@keyframes cellExplode{0%{filter:brightness(1);background-color:rgba(255,200,50,0.8);}15%{filter:brightness(3);background-color:rgba(255,100,0,0.6);}40%{filter:brightness(1.8);background-color:rgba(255,50,0,0.3);}100%{filter:brightness(1);background-color:transparent;}}
+
+/* Explosion emoji burst */
+.explode-emoji{position:absolute;font-size:clamp(14px,3vmin,28px);z-index:61;pointer-events:none;animation:emojiBurst 0.7s ease-out forwards;}
+@keyframes emojiBurst{0%{opacity:1;transform:scale(0.3) rotate(0deg);}30%{opacity:1;transform:scale(1.4) rotate(15deg);}60%{opacity:0.8;transform:scale(1.1) rotate(-5deg);}100%{opacity:0;transform:scale(0.5) rotate(30deg);}}
+
+/* Flying particles */
+.explode-particle{position:absolute;width:4px;height:4px;border-radius:50%;z-index:62;pointer-events:none;animation:particleFly 0.8s ease-out forwards;}
+@keyframes particleFly{0%{opacity:1;transform:translate(0,0) scale(1);}100%{opacity:0;transform:translate(var(--px),var(--py)) scale(0);}}
+
+/* Smoke puff */
+.explode-smoke{position:absolute;border-radius:50%;z-index:59;pointer-events:none;animation:smokePuff 1.2s ease-out forwards;background:radial-gradient(circle,rgba(100,100,100,0.6),transparent);}
+@keyframes smokePuff{0%{opacity:0.7;transform:scale(0.3);}40%{opacity:0.4;transform:scale(1.2);}100%{opacity:0;transform:scale(2) translateY(-10px);}}
+
+/* Screen shake on destroy */
+.map-shake{animation:mapShake 0.3s ease-out;}
+@keyframes mapShake{0%{transform:translate(0,0);}15%{transform:translate(-3px,2px);}30%{transform:translate(3px,-2px);}45%{transform:translate(-2px,3px);}60%{transform:translate(2px,-1px);}75%{transform:translate(-1px,1px);}100%{transform:translate(0,0);}}
 
 /* Responsive */
 @media(max-width:900px){.side-panel{width:200px;}.info-item{font-size:11px;}.info-item .value{font-size:13px;}}
@@ -187,59 +223,50 @@ body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#0a0a1a;
 <div id="gameScreen">
   <!-- Top Bar -->
   <div class="top-bar">
-    <div class="info-group">
-      <span class="stage-badge" id="stageBadge">STAGE 1</span>
-      <div class="info-item">
-        <span class="label">턴</span>
-        <span class="value" id="turnInfo">1 / 50</span>
+    <div class="top-row-header">
+      <div class="header-left">
+        <span class="stage-badge" id="stageBadge">STAGE 1</span>
+        <div class="info-item">
+          <span class="label">턴</span>
+          <span class="value" id="turnInfo">1 / 50</span>
+        </div>
       </div>
-      <div class="info-item">
-        <span class="label">🔵 유닛</span>
-        <span class="value blue" id="blueUnits">0</span>
-      </div>
-      <div class="info-item">
-        <span class="label">🔴 유닛</span>
-        <span class="value red" id="redUnits">0</span>
+      <div class="header-right">
+        <span style="font-size:11px;color:#6a6a9a;">👤</span>
+        <span style="font-size:13px;font-weight:bold;color:#7ab8ff;" id="playerName">-</span>
       </div>
     </div>
-    <div class="info-group">
-      <div class="info-item">
-        <span class="label">🔵 턴 자금</span>
-        <span class="value gold" id="blueTurnIncome">0</span>
+    <div class="team-rows">
+      <div class="team-row blue-row">
+        <span class="team-icon">🔵</span>
+        <span class="team-label">유닛</span>
+        <span class="team-val blue-c" id="blueUnits">0</span>
+        <span class="team-sep">│</span>
+        <span class="team-label">턴 자금</span>
+        <span class="team-val gold-c" id="blueTurnIncome">0</span>
+        <span class="team-sep">│</span>
+        <span class="team-label">보유 자금</span>
+        <span class="team-val gold-c" id="playerMoney">10,000</span>
       </div>
-      <div class="info-item">
-        <span class="label">🔵 보유</span>
-        <span class="value gold" id="playerMoney">10,000</span>
-      </div>
-      <div class="info-item">
-        <span class="label">🔴 턴 자금</span>
-        <span class="value" id="redTurnIncome" style="color:#cc8888;">0</span>
-      </div>
-      <div class="info-item">
-        <span class="label">🔵 총 자금</span>
-        <span class="value blue" id="blueTotalMoney">0</span>
-      </div>
-      <div class="info-item">
-        <span class="label">🔴 총 자금</span>
-        <span class="value red" id="redTotalMoney">0</span>
-      </div>
-      <div class="info-item">
-        <span class="label">👤</span>
-        <span class="value" id="playerName" style="color:#7ab8ff;">-</span>
+      <div class="team-row red-row">
+        <span class="team-icon">🔴</span>
+        <span class="team-label">유닛</span>
+        <span class="team-val red-c" id="redUnits">0</span>
+        <span class="team-sep">│</span>
+        <span class="team-label">턴 자금</span>
+        <span class="team-val" id="redTurnIncome" style="color:#cc8888;">0</span>
+        <span class="team-sep">│</span>
+        <span class="team-label">보유 자금</span>
+        <span class="team-val" id="redMoney" style="color:#cc8888;">10,000</span>
       </div>
     </div>
   </div>
 
   <!-- Phase Bar -->
   <div class="phase-bar">
-    <span class="phase-step" id="phaseIncome">💰 자금</span>
-    <span>→</span>
-    <span class="phase-step" id="phaseProduction">🏭 생산</span>
-    <span>→</span>
-    <span class="phase-step" id="phaseCombat">⚔️ 이동/전투</span>
-    <span>→</span>
-    <span class="phase-step" id="phaseEnd">🏁 종료</span>
-    <button class="end-turn-btn" id="endTurnBtn" onclick="advancePhase()">다음 단계 ▶</button>
+    <span class="phase-step active" id="phaseLabel">⚔️ 이동 / 전투 / 생산</span>
+    <span class="phase-hint" id="phaseHint">유닛 선택 또는 도시 클릭으로 생산</span>
+    <button class="end-turn-btn" id="endTurnBtn" onclick="endPlayerTurn()">턴 종료 ▶</button>
   </div>
 
   <!-- Main Area -->
@@ -296,7 +323,8 @@ const TERRAIN = {
   plain:    {name:'평야',   icon:'🌿', def:0,  moveCost:1, color:'#4a7a3a', passable:true, desc:'이동이 쉬운 평야 지형'},
   hill:     {name:'언덕',   icon:'⛰️', def:1,  moveCost:2, color:'#8a7a4a', passable:true, desc:'방어 보너스 +1, 이동 비용 2'},
   mountain: {name:'산',     icon:'🏔️', def:3,  moveCost:4, color:'#6a6a7a', passable:true, desc:'방어 보너스 +3, 보병만 진입 가능'},
-  city:     {name:'도시',   icon:'🏙️', def:2,  moveCost:1, color:'#5a5a6a', passable:true, desc:'점령 시 매 턴 자금 +1000, 유닛 생산 가능'},
+  city:     {name:'도시',   icon:'🏙️', def:2,  moveCost:1, color:'#5a5a6a', passable:true, desc:'점령 시 매 턴 자금 +1000'},
+  factory:  {name:'공장',   icon:'🏭', def:1,  moveCost:1, color:'#7a6a50', passable:true, desc:'점령 시 유닛 생산 가능'},
   river:    {name:'얕은 하천',icon:'💧', def:-1, moveCost:2, color:'#3a7a9a', passable:true, desc:'방어 불리 -1, 이동 비용 2'},
   sea:      {name:'깊은 바다',icon:'🌊', def:0,  moveCost:99,color:'#1a3a6a', passable:false, desc:'지상 유닛 진입 불가, ❌ 통행 불가'}
 };
@@ -396,40 +424,42 @@ function generateMap(){
     }
   }
 
-  // Cities - ensure some on each side (no duplicates)
-  const cityCount = 4 + Math.min(G.stage, 4);
-  const placedCities = new Set();
+  // Cities & Factories - ensure some on each side (no duplicates)
+  const placedStructures = new Set();
 
-  function placeCity(xMin, xMax, owner, count){
+  function placeStructure(xMin, xMax, owner, count, type){
     let placed = 0;
-    for(let attempt=0; attempt<100 && placed<count; attempt++){
+    for(let attempt=0; attempt<150 && placed<count; attempt++){
       let cx = xMin + rng(xMax - xMin + 1);
       let cy = 1 + rng(MAP_H - 2);
       const key = `${cx},${cy}`;
-      if(placedCities.has(key)) continue;
+      if(placedStructures.has(key)) continue;
       if(map[cy][cx].terrain==='plain' || map[cy][cx].terrain==='hill'){
-        map[cy][cx] = {terrain:'city', owner: owner};
-        placedCities.add(key);
+        map[cy][cx] = {terrain:type, owner: owner};
+        placedStructures.add(key);
         placed++;
       }
     }
     return placed;
   }
 
-  // Blue side cities (left columns 1~4)
-  placeCity(1, 4, 'blue', Math.ceil(cityCount/2));
-  // Red side cities (right columns)
-  placeCity(MAP_W-5, MAP_W-2, 'red', Math.ceil(cityCount/2));
-  // Neutral cities in middle
-  placeCity(7, 12, null, 2);
+  // Blue side: 3 cities (owned) + factories
+  placeStructure(1, 4, 'blue', 3, 'city');
+  placeStructure(1, 5, 'blue', 1 + Math.min(G.stage, 2), 'factory');
+  // Red side: 3 cities (owned) + factories
+  placeStructure(MAP_W-5, MAP_W-2, 'red', 3, 'city');
+  placeStructure(MAP_W-6, MAP_W-2, 'red', 1 + Math.min(G.stage, 2), 'factory');
+  // Neutral cities & factories in middle
+  placeStructure(7, 12, null, 2, 'city');
+  placeStructure(7, 12, null, 1, 'factory');
 
   // Ensure blue/red base areas are clear plain
   for(let y=MAP_H/2-2;y<MAP_H/2+2;y++){
     for(let x=0;x<2;x++){
       let iy=Math.floor(y);
       if(iy>=0&&iy<MAP_H){
-        if(map[iy][x].terrain==='sea'||map[iy][x].terrain==='mountain')map[iy][x].terrain='plain';
-        if(map[iy][MAP_W-1-x].terrain==='sea'||map[iy][MAP_W-1-x].terrain==='mountain')map[iy][MAP_W-1-x].terrain='plain';
+        if(map[iy][x].terrain==='sea'||map[iy][x].terrain==='mountain'){map[iy][x]={terrain:'plain',owner:null};}
+        if(map[iy][MAP_W-1-x].terrain==='sea'||map[iy][MAP_W-1-x].terrain==='mountain'){map[iy][MAP_W-1-x]={terrain:'plain',owner:null};}
       }
     }
   }
@@ -512,8 +542,8 @@ function renderMap(){
         cell.appendChild(sb);
       }
 
-      // City owner border glow
-      if(t.terrain==='city'){
+      // City/Factory owner border glow
+      if(t.terrain==='city' || t.terrain==='factory'){
         const co = document.createElement('div');
         co.className = 'city-owner-border '+(t.owner?t.owner+'-city':'neutral-city');
         cell.appendChild(co);
@@ -548,7 +578,7 @@ function renderMap(){
       if(G.selectedCell && G.selectedCell.x===x && G.selectedCell.y===y) cell.classList.add('selected');
       if(G.moveRange.find(m=>m.x===x&&m.y===y)) cell.classList.add('move-range');
       if(G.attackRange.find(a=>a.x===x&&a.y===y)) cell.classList.add('attack-range');
-      if(G.phase===1 && G.currentTeam==='blue' && t.terrain==='city' && t.owner==='blue' && !getUnitAt(x,y)){
+      if(G.currentTeam==='blue' && t.terrain==='factory' && t.owner==='blue' && !getUnitAt(x,y)){
         cell.classList.add('production-cell');
       }
 
@@ -568,31 +598,28 @@ function updateUI(){
   document.getElementById('playerMoney').textContent = G.blueMoney.toLocaleString();
   document.getElementById('blueTurnIncome').textContent = G.blueLastIncome.toLocaleString();
   document.getElementById('redTurnIncome').textContent = G.redLastIncome.toLocaleString();
-  document.getElementById('blueTotalMoney').textContent = G.blueTotalIncome.toLocaleString();
-  document.getElementById('redTotalMoney').textContent = G.redTotalIncome.toLocaleString();
+  document.getElementById('redMoney').textContent = G.redMoney.toLocaleString();
 
-  // Phase indicators
-  ['phaseIncome','phaseProduction','phaseCombat','phaseEnd'].forEach((id,i)=>{
-    const el = document.getElementById(id);
-    el.className = 'phase-step' + (i===G.phase?' active':'') + (i<G.phase?' done':'');
-  });
-
+  // Phase indicator - now single phase
   const btn = document.getElementById('endTurnBtn');
   if(G.currentTeam==='blue' && !G.gameOver){
     btn.disabled = false;
-    if(G.phase===0) btn.textContent = '자금 수령 ▶';
-    else if(G.phase===1) btn.textContent = '생산 완료 ▶';
-    else if(G.phase===2) btn.textContent = '턴 종료 ▶';
-    else btn.textContent = '적 턴 ▶';
+    btn.textContent = '턴 종료 ▶';
   } else {
     btn.disabled = true;
   }
 
-  // Production panel
+  // Production panel - show when clicking blue city with no unit during player turn
   const pp = document.getElementById('productionPanel');
-  if(G.phase===1 && G.currentTeam==='blue'){
-    pp.style.display = 'block';
-    renderProductionList();
+  if(G.currentTeam==='blue' && !G.gameOver && G.selectedCell){
+    const sc = G.selectedCell;
+    const ct = G.map[sc.y][sc.x];
+    if(ct.terrain==='factory' && ct.owner==='blue' && !getUnitAt(sc.x,sc.y) && !G.selectedUnit){
+      pp.style.display = 'block';
+      renderProductionList();
+    } else {
+      pp.style.display = 'none';
+    }
   } else {
     pp.style.display = 'none';
   }
@@ -629,6 +656,8 @@ function startGame(){
   placeInitialUnits();
   addLog('🎮 스테이지 '+G.stage+' 시작!','log-green');
   addLog('💰 초기 자금: 10,000','log-gold');
+  // 턴 1 자동 수입
+  collectIncome('blue');
   updateUI();
 }
 
@@ -639,80 +668,75 @@ function onCellClick(x,y){
   const clickedUnit = getUnitAt(x,y);
   const cell = G.map[y][x];
 
-  if(G.phase===1){
-    // Production phase - click on blue city to produce
-    if(cell.terrain==='city' && cell.owner==='blue' && !getUnitAt(x,y)){
-      G.selectedCell = {x,y};
+  // 1) 공격 범위 클릭 → 공격 실행
+  const atkTarget = G.attackRange.find(a=>a.x===x&&a.y===y);
+  if(atkTarget && G.selectedUnit){
+    const target = getUnitAt(x,y);
+    if(target && target.team==='red'){
+      executeCombat(G.selectedUnit, target);
+      clearSelection();
       updateUI();
-      document.getElementById('productionPanel').style.display = 'block';
+      checkWinCondition();
+      return;
     }
-    showCellInfo(x,y);
-    return;
   }
 
-  if(G.phase===2){
-    // Combat phase
-    // Check if clicking on attack range
-    const atkTarget = G.attackRange.find(a=>a.x===x&&a.y===y);
-    if(atkTarget && G.selectedUnit){
-      const target = getUnitAt(x,y);
-      if(target && target.team==='red'){
-        executeCombat(G.selectedUnit, target);
-        clearSelection();
-        updateUI();
-        checkWinCondition();
-        return;
-      }
+  // 2) 이동 범위 클릭 → 이동 실행
+  const moveTarget = G.moveRange.find(m=>m.x===x&&m.y===y);
+  if(moveTarget && G.selectedUnit && !G.selectedUnit.moved){
+    G.selectedUnit.x = x;
+    G.selectedUnit.y = y;
+    G.selectedUnit.moved = true;
+    // 견인포(towed): 이동하면 사격 불가
+    if(G.selectedUnit.type === 'towed'){
+      G.selectedUnit.attacked = true;
     }
-
-    // Check if clicking on move range
-    const moveTarget = G.moveRange.find(m=>m.x===x&&m.y===y);
-    if(moveTarget && G.selectedUnit && !G.selectedUnit.moved){
-      G.selectedUnit.x = x;
-      G.selectedUnit.y = y;
-      G.selectedUnit.moved = true;
-      // Capture city
-      if(cell.terrain==='city' && UNITS[G.selectedUnit.type].canCapture && cell.owner!=='blue'){
-        const prev = cell.owner;
-        cell.owner = 'blue';
-        addLog(`🏙️ 도시 점령! (${x},${y})`,'log-blue');
-      }
-      // After moving, show attack range
-      G.selectedCell = {x,y};
-      G.moveRange = [];
-      G.attackRange = getAttackRange(G.selectedUnit);
-      if(G.attackRange.length===0){
-        clearSelection();
-      }
-      updateUI();
-      showCellInfo(x,y);
-      return;
+    // 도시/공장 점령
+    if((cell.terrain==='city'||cell.terrain==='factory') && UNITS[G.selectedUnit.type].canCapture && cell.owner!=='blue'){
+      cell.owner = 'blue';
+      addLog(`${cell.terrain==='city'?'🏙️ 도시':'🏭 공장'} 점령! (${x},${y})`,'log-blue');
     }
-
-    // Select own unit
-    if(clickedUnit && clickedUnit.team==='blue'){
+    // 이동 후 공격 범위 표시
+    G.selectedCell = {x,y};
+    G.moveRange = [];
+    G.attackRange = getAttackRange(G.selectedUnit);
+    if(G.attackRange.length===0){
       clearSelection();
-      G.selectedUnit = clickedUnit;
-      G.selectedCell = {x,y};
-      if(!clickedUnit.moved){
-        G.moveRange = getMoveRange(clickedUnit);
-      }
-      if(!clickedUnit.attacked){
-        G.attackRange = getAttackRange(clickedUnit);
-      }
-      updateUI();
-      showUnitInfo(clickedUnit);
-      showCellInfo(x,y);
-      return;
     }
-
-    clearSelection();
     updateUI();
     showCellInfo(x,y);
     return;
   }
 
-  // Default: show info
+  // 3) 아군 유닛 선택
+  if(clickedUnit && clickedUnit.team==='blue'){
+    clearSelection();
+    G.selectedUnit = clickedUnit;
+    G.selectedCell = {x,y};
+    if(!clickedUnit.moved){
+      G.moveRange = getMoveRange(clickedUnit);
+    }
+    if(!clickedUnit.attacked){
+      G.attackRange = getAttackRange(clickedUnit);
+    }
+    updateUI();
+    showUnitInfo(clickedUnit);
+    showCellInfo(x,y);
+    return;
+  }
+
+  // 4) 빈 아군 공장 클릭 → 생산 패널 표시
+  if(!clickedUnit && cell.terrain==='factory' && cell.owner==='blue'){
+    clearSelection();
+    G.selectedCell = {x,y};
+    updateUI();
+    showCellInfo(x,y);
+    return;
+  }
+
+  // 5) 그 외 → 선택 해제
+  clearSelection();
+  updateUI();
   showCellInfo(x,y);
   if(clickedUnit) showUnitInfo(clickedUnit);
 }
@@ -728,7 +752,7 @@ function showCellInfo(x,y){
   const t = G.map[y][x];
   const td = TERRAIN[t.terrain];
   let ownerStr = '';
-  if(t.terrain==='city'){
+  if(t.terrain==='city' || t.terrain==='factory'){
     ownerStr = t.owner==='blue'?'<br>🔵 아군 점령':(t.owner==='red'?'<br>🔴 적군 점령':'<br>⚪ 중립');
   }
   document.getElementById('terrainInfo').innerHTML = `
@@ -827,15 +851,17 @@ function executeCombat(attacker, defender){
   defender.hp -= damage;
   attacker.attacked = true;
 
-  // 자주포(spa): 공격하면 이동 불가
-  if(attacker.type === 'spa'){
+  // 견인포(towed): 사격하면 이동 불가
+  if(attacker.type === 'towed'){
     attacker.moved = true;
   }
+  // 자주포(spa): 사격 후에도 이동 가능 (제한 없음)
 
   showDamageAnimation(defender.x, defender.y, damage);
   addLog(`⚔️ ${attacker.team==='blue'?'🔵':'🔴'} ${aBase.name} → ${defender.team==='blue'?'🔵':'🔴'} ${dBase.name}: ${damage} 데미지`, attacker.team==='blue'?'log-blue':'log-red');
 
   if(defender.hp <= 0){
+    showDestroyEffect(defender.x, defender.y, defender.team);
     addLog(`💀 ${defender.team==='blue'?'🔵':'🔴'} ${dBase.name} 파괴!`, defender.team==='blue'?'log-red':'log-blue');
     G.units = G.units.filter(u=>u.id!==defender.id);
   } else {
@@ -849,6 +875,7 @@ function executeCombat(attacker, defender){
       showDamageAnimation(attacker.x, attacker.y, counterDmg);
       addLog(`↩️ 반격! ${dBase.name} → ${aBase.name}: ${counterDmg} 데미지`, defender.team==='blue'?'log-blue':'log-red');
       if(attacker.hp <= 0){
+        showDestroyEffect(attacker.x, attacker.y, attacker.team);
         addLog(`💀 ${attacker.team==='blue'?'🔵':'🔴'} ${aBase.name} 파괴!`, attacker.team==='blue'?'log-red':'log-blue');
         G.units = G.units.filter(u=>u.id!==attacker.id);
       }
@@ -856,28 +883,105 @@ function executeCombat(attacker, defender){
   }
 }
 
+function getCellPos(x,y){
+  const grid = document.getElementById('mapGrid');
+  const cellEl = grid.children[y * MAP_W + x];
+  if(!cellEl) return {cx:0,cy:0,size:30};
+  return {
+    cx: cellEl.offsetLeft + cellEl.offsetWidth/2,
+    cy: cellEl.offsetTop + cellEl.offsetHeight/2,
+    size: cellEl.offsetWidth
+  };
+}
+
 function showDamageAnimation(x,y,dmg){
   const grid = document.getElementById('mapGrid');
-  const cellSize = grid.firstChild ? grid.firstChild.offsetWidth : 30;
+  grid.style.position = 'relative';
+  const pos = getCellPos(x,y);
   const dt = document.createElement('div');
   dt.className = 'damage-text';
   dt.textContent = '-'+dmg;
-  dt.style.left = (x * (cellSize+1) + cellSize/2 - 10) + 'px';
-  dt.style.top = (y * (cellSize+1)) + 'px';
-  grid.style.position = 'relative';
+  dt.style.left = (pos.cx - 12) + 'px';
+  dt.style.top = (pos.cy - pos.size/2) + 'px';
   grid.appendChild(dt);
-  setTimeout(()=>dt.remove(), 1000);
+  setTimeout(()=>dt.remove(), 1100);
+}
+
+function showDestroyEffect(x, y, team){
+  const grid = document.getElementById('mapGrid');
+  grid.style.position = 'relative';
+  const pos = getCellPos(x,y);
+  const hs = pos.size / 2;
+
+  // 1) Screen shake
+  grid.classList.remove('map-shake');
+  void grid.offsetWidth;
+  grid.classList.add('map-shake');
+  setTimeout(()=>grid.classList.remove('map-shake'), 350);
+
+  // 2) Cell flash
+  const cellEl = grid.children[y * MAP_W + x];
+  if(cellEl){
+    cellEl.classList.add('cell-explode');
+    setTimeout(()=>cellEl.classList.remove('cell-explode'), 700);
+  }
+
+  // 3) Explosion emoji burst (💥)
+  const emojis = ['💥','🔥','💥'];
+  emojis.forEach((e,i)=>{
+    const em = document.createElement('div');
+    em.className = 'explode-emoji';
+    em.textContent = e;
+    em.style.left = (pos.cx - 14 + (i-1)*8) + 'px';
+    em.style.top = (pos.cy - 14 + (i===1?-6:4)) + 'px';
+    em.style.animationDelay = (i * 0.08) + 's';
+    grid.appendChild(em);
+    setTimeout(()=>em.remove(), 900);
+  });
+
+  // 4) Flying particles
+  const colors = team==='blue' ? ['#4a9aff','#2a6acc','#88bbff','#fff'] : ['#ff4a4a','#cc2a2a','#ff8888','#fff'];
+  for(let i=0; i<12; i++){
+    const p = document.createElement('div');
+    p.className = 'explode-particle';
+    const angle = (Math.PI*2/12)*i + (Math.random()-0.5)*0.5;
+    const dist = hs*0.8 + Math.random()*hs*1.2;
+    p.style.setProperty('--px', Math.cos(angle)*dist + 'px');
+    p.style.setProperty('--py', Math.sin(angle)*dist + 'px');
+    p.style.left = pos.cx + 'px';
+    p.style.top = pos.cy + 'px';
+    p.style.backgroundColor = colors[i % colors.length];
+    p.style.width = (2 + Math.random()*4) + 'px';
+    p.style.height = p.style.width;
+    p.style.animationDelay = (Math.random()*0.1) + 's';
+    grid.appendChild(p);
+    setTimeout(()=>p.remove(), 1000);
+  }
+
+  // 5) Smoke puff
+  for(let i=0; i<3; i++){
+    const s = document.createElement('div');
+    s.className = 'explode-smoke';
+    const sz = hs*0.6 + Math.random()*hs*0.4;
+    s.style.width = sz + 'px';
+    s.style.height = sz + 'px';
+    s.style.left = (pos.cx - sz/2 + (Math.random()-0.5)*hs*0.6) + 'px';
+    s.style.top = (pos.cy - sz/2 + (Math.random()-0.5)*hs*0.6) + 'px';
+    s.style.animationDelay = (i*0.12) + 's';
+    grid.appendChild(s);
+    setTimeout(()=>s.remove(), 1400);
+  }
 }
 
 // ==================== PRODUCTION ====================
 let pendingProduction = null;
 
 function selectProduction(unitType){
-  if(G.phase!==1 || G.currentTeam!=='blue') return;
+  if(G.currentTeam!=='blue' || G.gameOver) return;
   if(!G.selectedCell) {addLog('⚠️ 도시를 먼저 선택하세요.','log-gold');return;}
   const {x,y} = G.selectedCell;
   const cell = G.map[y][x];
-  if(cell.terrain!=='city' || cell.owner!=='blue'){addLog('⚠️ 아군 도시에서만 생산 가능합니다.','log-gold');return;}
+  if(cell.terrain!=='factory' || cell.owner!=='blue'){addLog('⚠️ 아군 공장에서만 생산 가능합니다.','log-gold');return;}
   if(getUnitAt(x,y)){addLog('⚠️ 도시에 이미 유닛이 있습니다.','log-gold');return;}
   const cost = UNITS[unitType].cost;
   if(G.blueMoney < cost){addLog('⚠️ 자금이 부족합니다!','log-gold');return;}
@@ -888,42 +992,33 @@ function selectProduction(unitType){
   newUnit.moved = true;
   newUnit.attacked = true;
   newUnit.produced = true;
-  addLog(`🏭 ${UNITS[unitType].icon} ${UNITS[unitType].name} 생산! (-${cost})`, 'log-blue');
+  addLog(`🏭 ${UNITS[unitType].icon} ${UNITS[unitType].name} 생산! (-${cost.toLocaleString()})`, 'log-blue');
   clearSelection();
   updateUI();
 }
 
 // ==================== PHASE MANAGEMENT ====================
-function advancePhase(){
-  if(G.currentTeam!=='blue' || G.gameOver) return;
-
-  if(G.phase===0){
-    // Income phase -> collect income
-    const blueCities = countCities('blue');
-    const income = blueCities * 1000;
+function collectIncome(team){
+  const cities = countCities(team);
+  const income = cities * 1000;
+  if(team==='blue'){
     G.blueMoney += income;
     G.blueTotalIncome += income;
     G.blueLastIncome = income;
-    addLog(`💰 턴 자금: +${income.toLocaleString()} (도시 ${blueCities}개)`, 'log-gold');
-    G.phase = 1;
-    clearSelection();
-    updateUI();
-  } else if(G.phase===1){
-    // Production -> combat: 이번 턴에 생산된 유닛도 이동/전투 가능하게 초기화
-    G.units.filter(u=>u.team==='blue'&&u.produced).forEach(u=>{
-      u.moved = false;
-      u.attacked = false;
-    });
-    G.phase = 2;
-    clearSelection();
-    updateUI();
-  } else if(G.phase===2){
-    // End turn -> pass to AI
-    G.phase = 3;
-    clearSelection();
-    updateUI();
-    setTimeout(()=>startAITurn(), 500);
+    if(income > 0) addLog(`💰 턴 자금: +${income.toLocaleString()} (도시 ${cities}개)`, 'log-gold');
+  } else {
+    G.redMoney += income;
+    G.redTotalIncome += income;
+    G.redLastIncome = income;
+    if(income > 0) addLog(`🔴 적 턴 자금: +${income.toLocaleString()} (도시 ${cities}개)`, 'log-red');
   }
+}
+
+function endPlayerTurn(){
+  if(G.currentTeam!=='blue' || G.gameOver) return;
+  clearSelection();
+  updateUI();
+  setTimeout(()=>startAITurn(), 400);
 }
 
 function countCities(team){
@@ -955,23 +1050,18 @@ function startAITurn(){
 }
 
 function aiPhaseIncome(){
-  const redCities = countCities('red');
-  const income = redCities * 1000;
-  G.redMoney += income;
-  G.redTotalIncome += income;
-  G.redLastIncome = income;
-  addLog(`🔴 적 턴 자금: +${income.toLocaleString()} (도시 ${redCities}개)`, 'log-red');
+  collectIncome('red');
 }
 
 function aiPhaseProduction(){
-  // AI produces units at its cities
-  const redCities = [];
+  // AI produces units at its factories
+  const redFactories = [];
   for(let y=0;y<MAP_H;y++)
     for(let x=0;x<MAP_W;x++)
-      if(G.map[y][x].terrain==='city' && G.map[y][x].owner==='red' && !getUnitAt(x,y))
-        redCities.push({x,y});
+      if(G.map[y][x].terrain==='factory' && G.map[y][x].owner==='red' && !getUnitAt(x,y))
+        redFactories.push({x,y});
 
-  for(const city of redCities){
+  for(const fac of redFactories){
     if(G.redMoney < 1000) break;
     // AI decision: buy best affordable unit
     let choice = 'infantry';
@@ -982,7 +1072,7 @@ function aiPhaseProduction(){
 
     if(G.redMoney >= UNITS[choice].cost){
       G.redMoney -= UNITS[choice].cost;
-      addUnit(choice,'red',city.x,city.y);
+      addUnit(choice,'red',fac.x,fac.y);
       const u = G.units[G.units.length-1];
       u.moved = true; u.attacked = true; u.produced = true;
       addLog(`🔴 ${UNITS[choice].icon} ${UNITS[choice].name} 생산!`, 'log-red');
@@ -1036,8 +1126,8 @@ function aiPhaseCombat(){
             else score += (oldDist - newDist) * 5;
           }
 
-          // Prefer capturing cities
-          if(terrain.terrain==='city' && terrain.owner!=='red' && UNITS[unit.type].canCapture){
+          // Prefer capturing cities/factories
+          if((terrain.terrain==='city'||terrain.terrain==='factory') && terrain.owner!=='red' && UNITS[unit.type].canCapture){
             score += 25;
           }
 
@@ -1055,12 +1145,14 @@ function aiPhaseCombat(){
           unit.x = bestMove.x;
           unit.y = bestMove.y;
           unit.moved = true;
+          // 견인포: 이동하면 사격 불가
+          if(unit.type === 'towed') unit.attacked = true;
 
-          // Capture city
+          // Capture city/factory
           const cell = G.map[bestMove.y][bestMove.x];
-          if(cell.terrain==='city' && UNITS[unit.type].canCapture && cell.owner!=='red'){
+          if((cell.terrain==='city'||cell.terrain==='factory') && UNITS[unit.type].canCapture && cell.owner!=='red'){
             cell.owner = 'red';
-            addLog(`🔴 도시 점령! (${bestMove.x},${bestMove.y})`, 'log-red');
+            addLog(`🔴 ${cell.terrain==='city'?'도시':'공장'} 점령! (${bestMove.x},${bestMove.y})`, 'log-red');
           }
 
           // Attack after moving
@@ -1108,7 +1200,11 @@ function endAITurn(){
   addLog(`── 턴 ${G.turn} ──`, 'log-green');
 
   checkWinCondition();
-  if(!G.gameOver) updateUI();
+  if(!G.gameOver){
+    // 플레이어 턴 시작 시 자동 수입
+    collectIncome('blue');
+    updateUI();
+  }
 }
 
 // ==================== WIN/LOSE ====================
@@ -1181,7 +1277,7 @@ document.addEventListener('keydown', e=>{
   if(e.key===' ' || e.key==='Enter'){
     if(G.currentTeam==='blue' && !G.gameOver && document.getElementById('loginScreen').style.display==='none'){
       e.preventDefault();
-      advancePhase();
+      endPlayerTurn();
     }
   }
 });
